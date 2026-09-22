@@ -11,6 +11,7 @@
 body {
 	margin: 0;
 	min-width: 320px;
+	overflow-x: hidden;
 	background:
 		linear-gradient(rgba(232, 223, 207, .9), rgba(232, 223, 207, .9)),
 		repeating-linear-gradient(0deg, transparent 0 31px, rgba(83, 63, 45, .08) 32px),

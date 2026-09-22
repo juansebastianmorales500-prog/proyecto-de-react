@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../../contexts/Themecontext";
-import { Sun, Moon, ShoppingCart, UserRound, LogOut } from "lucide-react";
+import { Sun, Moon, ShoppingCart, UserRound, LogOut, Menu, X } from "lucide-react";
 import { useCart } from "../../contexts/CartContext";
 import { useEffect, useState } from "react";
 
@@ -18,6 +18,7 @@ function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const [perfilAbierto, setPerfilAbierto] = useState(false);
+  const [menuAbierto, setMenuAbierto] = useState(false);
   const [sesion, setSesion] = useState(() => ({
     logueado: localStorage.getItem("logueado") === "true",
     usuario: leerUsuario(),
@@ -39,6 +40,10 @@ function Navbar() {
     };
   }, []);
 
+  useEffect(() => {
+    setMenuAbierto(false);
+  }, [location.pathname]);
+
   const cerrarSesion = () => {
     if (window.confirm("¿Deseas cerrar sesión?")) {
       localStorage.removeItem("logueado");
@@ -50,16 +55,16 @@ function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-red-950 bg-[#171313] text-[#f5eadb] shadow-lg">
-      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-4">
         
         {/* LOGO CON LA TORTUGUITA */}
-        <Link to="/" className="flex items-center gap-2.5 text-2xl font-bold tracking-wide group">
-          <span className="text-2xl transition-transform group-hover:scale-110">🐢</span>
+        <Link to="/" className="group flex items-center gap-2 text-xl font-bold tracking-wide sm:gap-2.5 sm:text-2xl">
+          <span className="text-xl transition-transform group-hover:scale-110 sm:text-2xl">🐢</span>
           <span className="text-[#c9343e]">Dragon<span className="text-[#f5eadb]">Ball</span></span>
         </Link>
 
         {/* NAVEGACIÓN Y CARRITO */}
-        <nav className="flex items-center gap-6 font-medium text-[#cbbdad]">
+        <nav className="hidden items-center gap-6 font-medium text-[#cbbdad] lg:flex">
           <Link to="/" className="transition-colors hover:text-[#e04b52]">Inicio</Link>
           <Link to="/catalogo" className="transition-colors hover:text-[#e04b52]">Catálogo</Link>
           <Link to="/juego" className="transition-colors hover:text-[#e04b52]">Juego</Link>
@@ -67,7 +72,7 @@ function Navbar() {
         </nav>
 
         {/* BOTONES DE CARRITO, SESIÓN Y TEMA */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1 sm:gap-3">
           {/* BOTÓN DEL CARRITO */}
           <Link to="/carrito" className="relative rounded-full p-2 text-[#cbbdad] transition-colors hover:bg-[#302323]" title="Ver carrito">
             <ShoppingCart size={20} />
@@ -103,11 +108,39 @@ function Navbar() {
             </div>
           ) : (
             <>
-              <Link to="/login" state={{ from: location }} className="rounded-lg px-4 py-2 text-sm text-[#cbbdad] transition-colors hover:bg-[#302323]">Iniciar Sesión</Link>
-              <Link to="/registro" className="rounded-lg bg-[#c9343e] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#a9232c]">Registrarse</Link>
+              <Link to="/login" state={{ from: location }} className="hidden rounded-lg px-4 py-2 text-sm text-[#cbbdad] transition-colors hover:bg-[#302323] sm:block">Iniciar Sesión</Link>
+              <Link to="/registro" className="hidden rounded-lg bg-[#c9343e] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#a9232c] sm:block">Registrarse</Link>
             </>
           )}
+
+          <button
+            type="button"
+            onClick={() => setMenuAbierto(!menuAbierto)}
+            className="rounded-full p-2 text-[#cbbdad] transition-colors hover:bg-[#302323] lg:hidden"
+            title={menuAbierto ? "Cerrar menú" : "Abrir menú"}
+            aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={menuAbierto}
+          >
+            {menuAbierto ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
+
+        {menuAbierto && (
+          <div className="order-3 w-full border-t border-[#5c4545] pt-3 lg:hidden">
+            <nav className="flex flex-col gap-1 font-medium text-[#cbbdad]">
+              <Link to="/" className="rounded-lg px-3 py-2 hover:bg-[#302323]">Inicio</Link>
+              <Link to="/catalogo" className="rounded-lg px-3 py-2 hover:bg-[#302323]">Catálogo</Link>
+              <Link to="/juego" className="rounded-lg px-3 py-2 hover:bg-[#302323]">Juego</Link>
+              <Link to="/contactame" className="rounded-lg px-3 py-2 hover:bg-[#302323]">Contacto</Link>
+              {!sesion.logueado && (
+                <div className="mt-2 flex flex-wrap gap-2 border-t border-[#5c4545] pt-3 sm:hidden">
+                  <Link to="/login" state={{ from: location }} className="rounded-lg px-3 py-2 text-sm hover:bg-[#302323]">Iniciar Sesión</Link>
+                  <Link to="/registro" className="rounded-lg bg-[#c9343e] px-3 py-2 text-sm font-semibold text-white">Registrarse</Link>
+                </div>
+              )}
+            </nav>
+          </div>
+        )}
 
       </div>
     </header>
