@@ -8,7 +8,7 @@
     text-align: center;
     position: relative;
     isolation: isolate;
-    background: linear-gradient(#081b4b 0 45%, #11152f 45% 100%);
+    background: linear-gradient(#07152f 0 45%, #171447 45% 100%);
     box-shadow: 0 12px 30px rgba(33, 29, 26, .25);
 }
 
@@ -21,10 +21,10 @@
     width: 100%;
     height: 45%;
     background:
-        radial-gradient(circle at 18% 28%, #ffffff 0 2px, transparent 3px),
-        radial-gradient(circle at 76% 22%, #ffffff 0 1px, transparent 2px),
-        radial-gradient(circle at 58% 38%, #f8d66d 0 3px, transparent 4px),
-        linear-gradient(#081b4b, #183b78);
+        radial-gradient(circle at 15% 25%, #ffffff 0 2px, transparent 3px),
+        radial-gradient(circle at 78% 18%, #b9d7ff 0 2px, transparent 3px),
+        radial-gradient(circle at 56% 34%, #ffffff 0 1px, transparent 2px),
+        linear-gradient(145deg, #07152f, #123d73 65%, #28518c);
     z-index: -1;
 }
 
@@ -37,13 +37,15 @@
     width: 100%;
     height: 55%;
     background:
-        radial-gradient(circle at 82% 20%, #d8e5ff 0 28px, transparent 29px),
-        linear-gradient(#11152f, #050711);
+        radial-gradient(circle at 82% 20%, #f1e6bd 0 25px, transparent 26px),
+        linear-gradient(#171447, #09091d);
     z-index: -1;
 }
 
 .escenario h2 {
     font-family: Tahoma;
+    color: #8ee7ff;
+    text-shadow: 0 0 10px #35c9ff;
     position: relative;
     z-index: 1;
 }
@@ -67,6 +69,8 @@
 .marcador {
     margin-top: 25px;
     font-family: Tahoma;
+    color: #ffe38a;
+    text-shadow: 0 0 8px #d68b24;
     position: relative;
     z-index: 1;
 }
