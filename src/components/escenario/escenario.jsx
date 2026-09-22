@@ -1,4 +1,4 @@
-import Tortu from "./tortu";
+import Tortu from "./Tortu";
 import BotonDerecho from "./BotonDerecho";
 import BotonIzquierdo from "./BotonIzquierdo";
 import BotonReinicio from "./BotonReinicio";
