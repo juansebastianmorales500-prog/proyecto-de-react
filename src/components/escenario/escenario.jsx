@@ -25,7 +25,7 @@ function Escenario() {
     return (
 
         <div className="escenario">
-            <h2>La tortuga marihuanera</h2>
+            <h2>Mision espacial</h2>
             <Tortu posicion={posicion} />
             <div className="botones">
                 <BotonIzquierdo mover={moverIzquierda}/>

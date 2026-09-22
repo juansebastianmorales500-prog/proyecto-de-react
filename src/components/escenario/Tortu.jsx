@@ -10,7 +10,7 @@ function Tortu({ posicion }) {
                 transition: "left 0.2s"
             }}
         >
-            🐢
+            👨‍🚀
         </div>
 
     );
