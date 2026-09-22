@@ -1,0 +1,43 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencias
+node_modules/
+
+# Build
+dist/
+dist-ssr/
+
+# Archivos locales
+*.local
+
+# Variables de entorno
+.env
+.env.*
+
+# Configuración del editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Archivos que NO se subirán a GitHub
+eslint.config.js
+EXPLICACION_COMO_SE_HIZO.md
+EXPLICACION_PROYECTO.md
+README.md
+
+# Guías / documentos del proyecto
+GUIA_CATALOGO_DRAGON_BALL.md
+GUIA_EXP...COMPLETA.md

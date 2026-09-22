@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+	font-family: Georgia, "Times New Roman", serif;
+	color: #211d1a;
+	background: #e8dfcf;
+}
+
+body {
+	margin: 0;
+	min-width: 320px;
+	background:
+		linear-gradient(rgba(232, 223, 207, .9), rgba(232, 223, 207, .9)),
+		repeating-linear-gradient(0deg, transparent 0 31px, rgba(83, 63, 45, .08) 32px),
+		#e8dfcf;
+}
+
+button, a, input {
+	font-family: inherit;
+}
+
+::selection {
+	color: #f8f0e4;
+	background: #851c24;
+}
+
+html.dark body {
+	background: #171313;
+	color: #f8f0e4;
+}
