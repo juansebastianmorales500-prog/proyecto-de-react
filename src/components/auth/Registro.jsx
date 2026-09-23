@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function Registro() {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ function Registro() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  function registrar(e) {
+  async function registrar(e) {
     e.preventDefault();
 
     if (usuario.trim() === "" || password.trim() === "") {
@@ -38,7 +39,12 @@ function Registro() {
 
     localStorage.setItem("usuario", JSON.stringify(datos));
 
-    alert("Usuario registrado correctamente.");
+    await Swal.fire({
+      title: "Registro exitoso",
+      text: "Usuario registrado correctamente.",
+      icon: "success",
+      confirmButtonColor: "#c9343e",
+    });
 
     navigate("/login");
   }

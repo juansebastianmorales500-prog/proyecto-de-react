@@ -3,6 +3,7 @@ import { useTheme } from "../../contexts/Themecontext";
 import { Sun, Moon, ShoppingCart, UserRound, LogOut, Menu, X } from "lucide-react";
 import { useCart } from "../../contexts/CartContext";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 function leerUsuario() {
   try {
@@ -20,14 +21,14 @@ function Navbar() {
   const [perfilAbierto, setPerfilAbierto] = useState(false);
   const [menuAbierto, setMenuAbierto] = useState(false);
   const [sesion, setSesion] = useState(() => ({
-    logueado: localStorage.getItem("logueado") === "true",
+    logueado: sessionStorage.getItem("logueado") === "true",
     usuario: leerUsuario(),
   }));
 
   useEffect(() => {
     const actualizarSesion = () => {
       setSesion({
-        logueado: localStorage.getItem("logueado") === "true",
+        logueado: sessionStorage.getItem("logueado") === "true",
         usuario: leerUsuario(),
       });
     };
@@ -44,13 +45,23 @@ function Navbar() {
     setMenuAbierto(false);
   }, [location.pathname]);
 
-  const cerrarSesion = () => {
-    if (window.confirm("¿Deseas cerrar sesión?")) {
-      localStorage.removeItem("logueado");
-      setPerfilAbierto(false);
-      window.dispatchEvent(new Event("sesion-cambiada"));
-      navigate("/");
-    }
+  const cerrarSesion = async () => {
+    const confirmacion = await Swal.fire({
+      title: "¿Deseas cerrar sesión?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Sí, cerrar sesión",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#c9343e",
+      cancelButtonColor: "#695849",
+    });
+
+    if (!confirmacion.isConfirmed) return;
+
+    sessionStorage.removeItem("logueado");
+    setPerfilAbierto(false);
+    window.dispatchEvent(new Event("sesion-cambiada"));
+    navigate("/");
   };
 
   return (

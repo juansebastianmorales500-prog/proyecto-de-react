@@ -1,7 +1,7 @@
 import { Trash2, Minus, Plus, ShoppingBag } from "lucide-react";
 import { useState } from "react";
 import { useCart } from "../../contexts/CartContext";
-import { toast } from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const IVA = 0.19;
 const moneda = (valor) => valor.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 });
@@ -16,12 +16,28 @@ function Carrito() {
 
   const enviarPedido = async () => {
     if (!carrito.length) return;
-    if (!window.confirm("¿Confirmas el envío de este pedido?")) return;
+    const confirmacion = await Swal.fire({
+      title: "¿Confirmas el envío?",
+      text: "Se enviará el pedido con los productos del carrito.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Sí, enviar pedido",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#c9343e",
+      cancelButtonColor: "#695849",
+    });
+
+    if (!confirmacion.isConfirmed) return;
     setEnviando(true);
     await new Promise((resolver) => setTimeout(resolver, 500));
     vaciarCarrito();
     setEnviando(false);
-    toast.success("Pedido enviado correctamente. ¡Gracias por tu compra!");
+    await Swal.fire({
+      title: "Pedido enviado",
+      text: "¡Gracias por tu compra!",
+      icon: "success",
+      confirmButtonColor: "#c9343e",
+    });
   };
 
   return (
