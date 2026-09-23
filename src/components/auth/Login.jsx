@@ -30,8 +30,8 @@ function Login() {
       usuario === datos.usuario &&
       password === datos.password
     ) {
-      sessionStorage.setItem("logueado", "true");
-      localStorage.removeItem("logueado");
+      localStorage.setItem("logueado", "true");
+      sessionStorage.removeItem("logueado");
       window.dispatchEvent(new Event("sesion-cambiada"));
       navigate(from, { replace: true });
     } else {

@@ -21,14 +21,14 @@ function Navbar() {
   const [perfilAbierto, setPerfilAbierto] = useState(false);
   const [menuAbierto, setMenuAbierto] = useState(false);
   const [sesion, setSesion] = useState(() => ({
-    logueado: sessionStorage.getItem("logueado") === "true",
+    logueado: localStorage.getItem("logueado") === "true",
     usuario: leerUsuario(),
   }));
 
   useEffect(() => {
     const actualizarSesion = () => {
       setSesion({
-        logueado: sessionStorage.getItem("logueado") === "true",
+        logueado: localStorage.getItem("logueado") === "true",
         usuario: leerUsuario(),
       });
     };
@@ -58,8 +58,8 @@ function Navbar() {
 
     if (!confirmacion.isConfirmed) return;
 
-    sessionStorage.removeItem("logueado");
     localStorage.removeItem("logueado");
+    sessionStorage.removeItem("logueado");
     setPerfilAbierto(false);
     window.dispatchEvent(new Event("sesion-cambiada"));
     navigate("/");

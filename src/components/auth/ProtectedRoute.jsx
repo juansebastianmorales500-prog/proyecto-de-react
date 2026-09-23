@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 function ProtectedRoute() {
-  const logueado = sessionStorage.getItem("logueado");
+  const logueado = localStorage.getItem("logueado");
   const location = useLocation();
 
   if (logueado === "true") {
