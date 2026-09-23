@@ -31,6 +31,7 @@ function Login() {
       password === datos.password
     ) {
       sessionStorage.setItem("logueado", "true");
+      localStorage.removeItem("logueado");
       window.dispatchEvent(new Event("sesion-cambiada"));
       navigate(from, { replace: true });
     } else {

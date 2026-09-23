@@ -59,6 +59,7 @@ function Navbar() {
     if (!confirmacion.isConfirmed) return;
 
     sessionStorage.removeItem("logueado");
+    localStorage.removeItem("logueado");
     setPerfilAbierto(false);
     window.dispatchEvent(new Event("sesion-cambiada"));
     navigate("/");
