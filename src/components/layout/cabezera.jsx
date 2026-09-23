@@ -7,6 +7,9 @@ import Swal from "sweetalert2";
 
 function leerUsuario() {
   try {
+    const estaLogueado = localStorage.getItem("logueado") === "true";
+    if (!estaLogueado) return null; // ✅ Si no está logueado, no devuelve el usuario aunque exista en localStorage
+
     return JSON.parse(localStorage.getItem("usuario") || "null");
   } catch {
     return null;
@@ -58,8 +61,12 @@ function Navbar() {
 
     if (!confirmacion.isConfirmed) return;
 
+    // ✅ Se eliminan tanto la bandera como los datos del usuario del almacenamiento
     localStorage.removeItem("logueado");
+    localStorage.removeItem("usuario");
     sessionStorage.removeItem("logueado");
+    sessionStorage.removeItem("usuario");
+
     setPerfilAbierto(false);
     window.dispatchEvent(new Event("sesion-cambiada"));
     navigate("/");
