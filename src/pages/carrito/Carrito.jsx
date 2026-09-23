@@ -9,9 +9,10 @@ const moneda = (valor) => valor.toLocaleString("es-CO", { style: "currency", cur
 function Carrito() {
   const { carrito, cambiarCantidad, eliminarDelCarrito, vaciarCarrito } = useCart();
   const [enviando, setEnviando] = useState(false);
-  const subtotal = carrito.reduce((total, item) => total + item.precio * item.cantidad, 0);
-  const iva = subtotal * IVA;
-  const total = subtotal + iva;
+  const totalConIva = carrito.reduce((total, item) => total + item.precio * item.cantidad, 0);
+  const subtotal = totalConIva / (1 + IVA);
+  const iva = totalConIva - subtotal;
+  const total = totalConIva;
 
   const enviarPedido = async () => {
     if (!carrito.length) return;
@@ -58,8 +59,8 @@ function Carrito() {
             <aside className="h-fit rounded-xl bg-[#211d1a] p-6 text-white">
               <h2 className="text-xl font-semibold">Resumen del pedido</h2>
               <div className="mt-6 space-y-3 text-sm text-slate-300">
-                <p className="flex justify-between"><span>Subtotal</span><span>{moneda(subtotal)}</span></p>
-                <p className="flex justify-between"><span>IVA (19%)</span><span>{moneda(iva)}</span></p>
+                <p className="flex justify-between"><span>Precio antes de IVA</span><span>{moneda(subtotal)}</span></p>
+                <p className="flex justify-between"><span>IVA incluido (19%)</span><span>{moneda(iva)}</span></p>
                 <p className="flex justify-between border-t border-slate-700 pt-4 text-lg font-bold text-white"><span>Total a pagar</span><span>{moneda(total)}</span></p>
               </div>
               <button type="button" disabled={enviando} onClick={enviarPedido} className="mt-8 w-full rounded-lg bg-[#c9343e] px-4 py-3 font-bold text-white disabled:opacity-50">{enviando ? "Enviando..." : "Enviar pedido"}</button>
