@@ -16,7 +16,8 @@ function Login() {
 
     let datos;
     try {
-      datos = JSON.parse(localStorage.getItem("usuario") || "null");
+      // ✅ Leemos la cuenta registrada en la base de datos local
+      datos = JSON.parse(localStorage.getItem("cuenta_registrada") || "null");
     } catch {
       datos = null;
     }
@@ -30,8 +31,11 @@ function Login() {
       usuario === datos.usuario &&
       password === datos.password
     ) {
+      // ✅ Guardamos las banderas e información del usuario SOLO cuando inicia sesión con éxito
       localStorage.setItem("logueado", "true");
+      localStorage.setItem("usuario", JSON.stringify({ usuario: datos.usuario }));
       sessionStorage.removeItem("logueado");
+      
       window.dispatchEvent(new Event("sesion-cambiada"));
       navigate(from, { replace: true });
     } else {

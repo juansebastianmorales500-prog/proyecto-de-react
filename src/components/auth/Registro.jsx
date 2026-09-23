@@ -19,7 +19,8 @@ function Registro() {
 
     let usuarioExistente;
     try {
-      usuarioExistente = JSON.parse(localStorage.getItem("usuario") || "null");
+      // ✅ Cambiamos a la clave "cuenta_registrada" para la base de datos local
+      usuarioExistente = JSON.parse(localStorage.getItem("cuenta_registrada") || "null");
     } catch {
       usuarioExistente = null;
     }
@@ -37,7 +38,8 @@ function Registro() {
       password,
     };
 
-    localStorage.setItem("usuario", JSON.stringify(datos));
+    // ✅ Guardamos en "cuenta_registrada" en vez de "usuario"
+    localStorage.setItem("cuenta_registrada", JSON.stringify(datos));
 
     await Swal.fire({
       title: "Registro exitoso",
