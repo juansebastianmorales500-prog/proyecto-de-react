@@ -5,21 +5,29 @@ import Swal from "sweetalert2";
 function Registro() {
   const navigate = useNavigate();
 
-  const [usuario, setUsuario] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   async function registrar(e) {
     e.preventDefault();
 
-    if (usuario.trim() === "" || password.trim() === "") {
-      setError("Todos los campos son obligatorios.");
+    const nombreLimpio = nombre.trim();
+    const emailLimpio = email.trim().toLowerCase();
+
+    if (!nombreLimpio || !emailLimpio || !password.trim()) {
+      setError("Nombre, correo y contraseña son obligatorios.");
+      return;
+    }
+
+    if (!emailLimpio.includes("@") || !emailLimpio.includes(".")) {
+      setError("Ingresá un correo válido.");
       return;
     }
 
     let usuarioExistente;
     try {
-      // ✅ Cambiamos a la clave "cuenta_registrada" para la base de datos local
       usuarioExistente = JSON.parse(localStorage.getItem("cuenta_registrada") || "null");
     } catch {
       usuarioExistente = null;
@@ -27,18 +35,19 @@ function Registro() {
 
     if (
       usuarioExistente &&
-      usuarioExistente.usuario === usuario
+      (usuarioExistente.email === emailLimpio || usuarioExistente.usuario === nombreLimpio)
     ) {
-      setError("Ese usuario ya existe.");
+      setError("Ese usuario o correo ya existe.");
       return;
     }
 
     const datos = {
-      usuario,
+      nombre: nombreLimpio,
+      usuario: nombreLimpio,
+      email: emailLimpio,
       password,
     };
 
-    // ✅ Guardamos en "cuenta_registrada" en vez de "usuario"
     localStorage.setItem("cuenta_registrada", JSON.stringify(datos));
 
     await Swal.fire({
@@ -60,11 +69,20 @@ function Registro() {
 
         <input
           type="text"
-          placeholder="Usuario"
+          placeholder="Nombre completo"
           required
           className="rounded-lg border border-[#cbbdad] bg-white px-4 py-3 outline-none focus:border-[#c9343e] focus:ring-2 focus:ring-[#c9343e]/20 dark:border-[#5c4545] dark:bg-[#171313] dark:text-[#f8f0e4]"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+        />
+
+        <input
+          type="email"
+          placeholder="Correo electrónico"
+          required
+          className="rounded-lg border border-[#cbbdad] bg-white px-4 py-3 outline-none focus:border-[#c9343e] focus:ring-2 focus:ring-[#c9343e]/20 dark:border-[#5c4545] dark:bg-[#171313] dark:text-[#f8f0e4]"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <input

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 function Login() {
-  const [usuario, setUsuario] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
@@ -16,7 +16,6 @@ function Login() {
 
     let datos;
     try {
-      // ✅ Leemos la cuenta registrada en la base de datos local
       datos = JSON.parse(localStorage.getItem("cuenta_registrada") || "null");
     } catch {
       datos = null;
@@ -27,19 +26,28 @@ function Login() {
       return;
     }
 
+    const emailIngresado = email.trim().toLowerCase();
+
     if (
-      usuario === datos.usuario &&
+      emailIngresado === (datos.email || "").toLowerCase() &&
       password === datos.password
     ) {
-      // ✅ Guardamos las banderas e información del usuario SOLO cuando inicia sesión con éxito
       localStorage.setItem("logueado", "true");
-      localStorage.setItem("usuario", JSON.stringify({ usuario: datos.usuario }));
+      localStorage.setItem(
+        "usuario",
+        JSON.stringify({
+          usuario: datos.usuario || datos.nombre || emailIngresado,
+          nombre: datos.nombre || "",
+          email: datos.email || emailIngresado,
+          password: datos.password || "",
+        })
+      );
       sessionStorage.removeItem("logueado");
-      
+
       window.dispatchEvent(new Event("sesion-cambiada"));
       navigate(from, { replace: true });
     } else {
-      setError("Usuario o contraseña incorrectos.");
+      setError("Correo o contraseña incorrectos.");
     }
   }
 
@@ -51,12 +59,12 @@ function Login() {
         <h2 className="text-center text-2xl font-bold text-[#211d1a] dark:text-[#f8f0e4]">Iniciar sesión</h2>
 
         <input
-          type="text"
-          placeholder="Usuario"
+          type="email"
+          placeholder="Correo electrónico"
           required
           className="rounded-lg border border-[#cbbdad] bg-white px-4 py-3 outline-none focus:border-[#c9343e] focus:ring-2 focus:ring-[#c9343e]/20 dark:border-[#5c4545] dark:bg-[#171313] dark:text-[#f8f0e4]"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <input

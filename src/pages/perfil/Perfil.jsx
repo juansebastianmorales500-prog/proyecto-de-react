@@ -5,7 +5,7 @@ import fotoPerfilDefault from "../../assets/foto-perfil.svg";
 const FOTO_PERFIL_KEY = "fotoPerfil";
 
 function Perfil() {
-  const usuario = JSON.parse(localStorage.getItem("usuario") || "null");
+  const usuarioActual = JSON.parse(localStorage.getItem("usuario") || "null");
   const [fotoPerfil, setFotoPerfil] = useState(() => localStorage.getItem(FOTO_PERFIL_KEY) || fotoPerfilDefault);
 
   const handleFotoChange = (event) => {
@@ -57,8 +57,8 @@ function Perfil() {
         </div>
 
         <h1 className="mt-6 text-2xl font-bold text-[#211d1a] dark:text-[#f8f0e4]">Perfil del investigador</h1>
-        <p className="mt-3 text-[#695849] dark:text-[#cbbdad]">{usuario?.usuario || "Usuario"}</p>
-        <p className="mt-2 text-sm text-[#7d6858] dark:text-[#dcccb5]">Sube tu foto para personalizar tu perfil.</p>
+        <p className="mt-3 text-xl font-semibold text-[#211d1a] dark:text-[#f8f0e4]">{usuarioActual?.nombre || usuarioActual?.usuario || "Usuario"}</p>
+        <p className="mt-2 text-[#695849] dark:text-[#cbbdad]">{usuarioActual?.email || "correo@ejemplo.com"}</p>
       </section>
     </main>
   );
