@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Camera, UserRound } from "lucide-react";
+import fotoPerfilDefault from "../../assets/foto-perfil.svg";
 
 const FOTO_PERFIL_KEY = "fotoPerfil";
 
 function Perfil() {
   const usuario = JSON.parse(localStorage.getItem("usuario") || "null");
-  const [fotoPerfil, setFotoPerfil] = useState(() => localStorage.getItem(FOTO_PERFIL_KEY) || "");
+  const [fotoPerfil, setFotoPerfil] = useState(() => localStorage.getItem(FOTO_PERFIL_KEY) || fotoPerfilDefault);
 
   const handleFotoChange = (event) => {
     const archivo = event.target.files?.[0];
